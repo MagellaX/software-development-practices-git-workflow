@@ -1,0 +1,101 @@
+GIT COMMAND DOCUMENTATION
+
+Commands are listed in execution order. File edits were made locally between the relevant staging commands.
+The project folder was created locally before git init and before GitHub repository creation.
+
+01. git init -b main
+    Initialize the existing local project folder with main as its first branch. No GitHub repository exists yet.
+
+02. git config user.name MagellaX
+    Set the commit author for this repository only.
+
+03. git config user.email 144127816+MagellaX@users.noreply.github.com
+    Use the GitHub account noreply address for public commits.
+
+04. git add index.html about.html
+    Stage the two initial HTML files.
+
+05. git commit -m "Initial commit: add home and about pages"
+    Record the initial state of the project.
+
+06. git add index.html
+    Stage the modification to the home page.
+
+07. git commit -m "Update home page introduction"
+    Record the second commit on main.
+
+08. git branch feature
+    Create the required feature branch at the current commit.
+
+09. git switch feature
+    Switch the working tree to feature.
+
+10. git add about.html
+    Stage the feature branch changes.
+
+11. git commit -m "Add project features to about page"
+    Commit the new content on feature.
+
+12. git switch main
+    Return to main before merging.
+
+13. git merge --no-ff feature -m "Merge feature branch into main"
+    Merge feature with an explicit merge commit so branch activity stays visible.
+
+14. git log --graph --oneline --all --decorate
+    Display the commit graph including the feature branch and merge.
+
+15. git check-ignore -v debug.log temp/scratch.txt
+    Verify that *.log and temp/ are ignored and show the matching rules.
+
+16. git add .gitignore
+    Stage the ignore rules; ignored sample files are not tracked.
+
+17. git commit -m "Ignore log files and temp folder"
+    Save the .gitignore implementation.
+
+18. git add index.html
+    Stage an additional change for the undo demonstration.
+
+19. git commit -m "Add temporary announcement for undo demonstration"
+    Create the additional commit that will be undone.
+
+20. git show --stat --oneline HEAD
+    Show the additional commit before it is undone.
+
+21. git revert --no-edit HEAD
+    Undo the last commit by creating an inverse commit, retaining both actions in public history.
+
+22. git show --format=short HEAD -- index.html
+    Show the revert patch removing the temporary announcement.
+
+23. git status --short
+    Verify the working tree is clean after the revert. Empty output means no staged or unstaged changes.
+
+24. git add README.md git_commands.txt
+    Stage the project README and complete command documentation.
+
+25. git commit -m "Document Git workflow commands"
+    Commit the command documentation for inclusion on GitHub.
+
+26. gh repo create MagellaX/software-development-practices-git-workflow --public --source . --remote origin --description "Local Git workflow demonstration with branching, merging, ignore rules, and revert."
+    Create an empty public GitHub repository after all required local workflow steps; configure origin. This is a GitHub CLI command.
+
+27. git remote -v
+    Display the configured GitHub fetch and push URLs.
+
+28. git push -u origin main
+    Push the complete main history and set its upstream branch.
+
+29. git push -u origin feature
+    Publish feature as well so the branch remains visible on GitHub.
+
+30. git log --graph --oneline --all --decorate
+    Display the final graph with local and remote branch references.
+
+31. git status --short --branch
+    Confirm main tracks origin/main and the working tree has no changes.
+
+32. git ls-remote --heads origin
+    Verify the main and feature branch hashes stored on GitHub.
+
