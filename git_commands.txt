@@ -99,3 +99,38 @@ The project folder was created locally before git init and before GitHub reposit
 32. git ls-remote --heads origin
     Verify the main and feature branch hashes stored on GitHub.
 
+SUPPLEMENTARY EVIDENCE COMMANDS
+These read-only commands inspect the completed repository for terminal screenshots.
+
+git ls-files
+    List the tracked HTML, ignore, and documentation files.
+
+git --no-pager log --graph --oneline --all --decorate
+    Display the full commit graph without opening a pager.
+
+git --no-pager show --no-patch --format=short --pretty=raw 613c8cf
+    Display the merge commit and its two parent hashes.
+
+git --no-pager show HEAD:.gitignore
+    Display the committed ignore rules.
+
+git --no-pager show --stat --oneline 4abf0e5
+    Inspect the temporary announcement commit that was undone.
+
+git --no-pager show --format=short 7a24509 -- index.html
+    Inspect the saved revert commit and the line it removed.
+
+git branch -avv
+    Show local and remote main and feature branches with commit information.
+
+gh repo view --json url,visibility,defaultBranchRef
+    Verify the repository URL, public visibility, and default branch (GitHub CLI).
+
+git add git_commands.txt
+    Stage the supplementary command documentation.
+
+git commit -m "Document terminal evidence verification commands"
+    Commit the additional commands used to capture the final evidence.
+
+git push origin main
+    Publish the updated documentation to GitHub.
