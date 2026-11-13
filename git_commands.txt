@@ -1,136 +1,148 @@
 GIT COMMAND DOCUMENTATION
 
-Commands are listed in execution order. File edits were made locally between the relevant staging commands.
-The project folder was created locally before git init and before GitHub repository creation.
+This record follows the website repository from its first snapshot to publication.
+The HTML edits took place between the relevant add and commit commands; GitHub was created afterwards.
 
 01. git init -b main
-    Initialize the existing local project folder with main as its first branch. No GitHub repository exists yet.
+    Start version tracking in the already-created website directory. The -b option selects main immediately.
 
 02. git config user.name MagellaX
-    Set the commit author for this repository only.
+    Give commits in this website repository the author label MagellaX; other repositories keep their settings.
 
 03. git config user.email 144127816+MagellaX@users.noreply.github.com
-    Use the GitHub account noreply address for public commits.
+    Associate the public commits with the account noreply address rather than exposing a personal mailbox.
 
 04. git add index.html about.html
-    Stage the two initial HTML files.
+    Place both HTML pages in the index so the first snapshot contains the linked pair.
 
 05. git commit -m "Initial commit: add home and about pages"
-    Record the initial state of the project.
+    Save the two-page starting point as e2ff534, before any introduction or features-list edits.
 
 06. git add index.html
-    Stage the modification to the home page.
+    Select the edited introduction in index.html for the next snapshot; about.html is unchanged here.
 
 07. git commit -m "Update home page introduction"
-    Record the second commit on main.
+    Save the introduction revision as df04dbc. This establishes a second main-branch state before branching.
 
 08. git branch feature
-    Create the required feature branch at the current commit.
+    Add a branch pointer at df04dbc. Creating this pointer alone does not change the checked-out branch.
 
 09. git switch feature
-    Switch the working tree to feature.
+    Check out that pointer so the upcoming about-page commit advances feature rather than main.
 
 10. git add about.html
-    Stage the feature branch changes.
+    Put the new about-page features list into the index while feature is checked out.
 
 11. git commit -m "Add project features to about page"
-    Commit the new content on feature.
+    Save the features-list work as 616150d; this is the commit retained by the feature branch.
 
 12. git switch main
-    Return to main before merging.
+    Check out main again, selecting the destination into which the about-page work will be combined.
 
 13. git merge --no-ff feature -m "Merge feature branch into main"
-    Merge feature with an explicit merge commit so branch activity stays visible.
+    Produce merge 613c8cf. --no-ff deliberately keeps a two-parent merge even though a fast-forward was possible.
 
 14. git log --graph --oneline --all --decorate
-    Display the commit graph including the feature branch and merge.
+    Draw the relationship between df04dbc, feature commit 616150d and their merge; decorations identify branch pointers.
 
 15. git check-ignore -v debug.log temp/scratch.txt
-    Verify that *.log and temp/ are ignored and show the matching rules.
+    Ask which exclusion rule matches each sample path. The returned line numbers distinguish *.log from temp/.
 
 16. git add .gitignore
-    Stage the ignore rules; ignored sample files are not tracked.
+    Select the exclusion configuration itself for tracking, while leaving the sample log and scratch file outside Git.
 
 17. git commit -m "Ignore log files and temp folder"
-    Save the .gitignore implementation.
+    Store the two exclusion patterns in 229cd30 so another checkout receives the same rules.
 
 18. git add index.html
-    Stage an additional change for the undo demonstration.
+    Select the one-line announcement added specifically to demonstrate recovery from an unwanted change.
 
 19. git commit -m "Add temporary announcement for undo demonstration"
-    Create the additional commit that will be undone.
+    Save that announcement as 4abf0e5. Its recorded insertion supplies a concrete change to reverse.
 
 20. git show --stat --oneline HEAD
-    Show the additional commit before it is undone.
+    Inspect the then-current announcement snapshot: the summary reports one added line in index.html.
 
 21. git revert --no-edit HEAD
-    Undo the last commit by creating an inverse commit, retaining both actions in public history.
+    Apply the opposite of the then-latest change. --no-edit accepts the generated message, producing 7a24509.
 
 22. git show --format=short HEAD -- index.html
-    Show the revert patch removing the temporary announcement.
+    Read the recovery patch: the minus-prefixed announcement line confirms what was taken out of index.html.
 
 23. git status --short
-    Verify the working tree is clean after the revert. Empty output means no staged or unstaged changes.
+    Check for remaining index or worktree differences. Here the command returned no lines after recovery.
 
 24. git add README.md git_commands.txt
-    Stage the project README and complete command documentation.
+    Select the usage note and this command record so both become part of the published project.
 
 25. git commit -m "Document Git workflow commands"
-    Commit the command documentation for inclusion on GitHub.
+    Save the first documentation version as 75ec7cb, following the completed merge, exclusions and recovery.
 
 26. gh repo create MagellaX/software-development-practices-git-workflow --public --source . --remote origin --description "Local Git workflow demonstration with branching, merging, ignore rules, and revert."
-    Create an empty public GitHub repository after all required local workflow steps; configure origin. This is a GitHub CLI command.
+    Use GitHub CLI to create the remote only after the local work; --public sets visibility and --remote names it origin.
 
 27. git remote -v
-    Display the configured GitHub fetch and push URLs.
+    Inspect both configured endpoints and confirm they identify the MagellaX assignment repository.
 
 28. git push -u origin main
-    Push the complete main history and set its upstream branch.
+    Send main and its reachable commits to GitHub; -u remembers origin/main for subsequent status and push commands.
 
 29. git push -u origin feature
-    Publish feature as well so the branch remains visible on GitHub.
+    Send the still-retained feature pointer too, allowing a reviewer to inspect the branch directly on GitHub.
 
 30. git log --graph --oneline --all --decorate
-    Display the final graph with local and remote branch references.
+    Recheck the graph after publication. origin/main and origin/feature now appear beside their local counterparts.
 
 31. git status --short --branch
-    Confirm main tracks origin/main and the working tree has no changes.
+    Read the branch relationship together with worktree status; main...origin/main was the only output line.
 
 32. git ls-remote --heads origin
-    Verify the main and feature branch hashes stored on GitHub.
+    Query the server branch pointers directly and compare their hashes with the local history.
 
 SUPPLEMENTARY EVIDENCE COMMANDS
-These read-only commands inspect the completed repository for terminal screenshots.
+The checks below produced the terminal screenshots after the main exercise. Descriptions were clarified later; recorded commands and hashes are unchanged.
 
 git ls-files
-    List the tracked HTML, ignore, and documentation files.
+    Enumerate the files Git actually records; this separates tracked website files from the ignored examples.
 
 git --no-pager log --graph --oneline --all --decorate
-    Display the full commit graph without opening a pager.
+    Print the evidence graph directly in the console so its branch relationships fit in a screenshot.
 
 git --no-pager show --no-patch --format=short --pretty=raw 613c8cf
-    Display the merge commit and its two parent hashes.
+    Expose the two parent fields of 613c8cf without printing the HTML patch.
 
 git --no-pager show HEAD:.gitignore
-    Display the committed ignore rules.
+    Read the saved configuration from Git rather than relying only on the current working copy.
 
 git --no-pager show --stat --oneline 4abf0e5
-    Inspect the temporary announcement commit that was undone.
+    Inspect the announcement by its stable hash, even after HEAD has advanced beyond the recovery operation.
 
 git --no-pager show --format=short 7a24509 -- index.html
-    Inspect the saved revert commit and the line it removed.
+    Inspect the recovery by its stable hash and limit the output to the affected page.
 
 git branch -avv
-    Show local and remote main and feature branches with commit information.
+    Compare the tips of local branches with the fetched remote references in the captured evidence.
 
 gh repo view --json url,visibility,defaultBranchRef
-    Verify the repository URL, public visibility, and default branch (GitHub CLI).
+    Retrieve machine-readable GitHub properties; PUBLIC verifies that the project is viewable without repository access.
 
 git add git_commands.txt
-    Stage the supplementary command documentation.
+    Select the additional screenshot-verification notes for the next documentation snapshot.
 
 git commit -m "Document terminal evidence verification commands"
-    Commit the additional commands used to capture the final evidence.
+    Record those added notes as d250adf, which is the main-branch tip visible in the terminal screenshots.
 
 git push origin main
-    Publish the updated documentation to GitHub.
+    Send the documentation snapshot to the existing remote without changing the feature pointer.
+
+DOCUMENTATION REVISION
+The following commands publish the clarified explanations without replacing the recorded workflow history.
+
+git add git_commands.txt
+    Select the revised explanations; the earlier HTML changes, merge and recovery are left in place.
+
+git commit -m "Clarify repository-specific command explanations"
+    Keep the explanatory edits as an additional documentation commit that can be inspected independently.
+
+git push origin main
+    Update the public main branch with the clarified command record.
